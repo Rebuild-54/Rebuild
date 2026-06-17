@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebuilding — Coaching for Survivors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f7f1e8;--paper:#fbf7f0;--clay:#c0653f;--clay-deep:#9c4a2a;
+    --sage:#6b7256;--ink:#36302a;--ink-soft:#5f564d;--line:#e4d8c6;--gold:#d9a05b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--cream);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:64px}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E")}
+  .florals{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.78;pointer-events:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+
+  /* ── NAVBAR ── */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:900;background:rgba(247,241,232,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+  .navbar.scrolled{box-shadow:0 4px 28px -10px rgba(54,48,42,.18)}
+  .navbar-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;letter-spacing:.5px;text-decoration:none;color:var(--ink)}
+  .logo span{color:var(--clay)}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a{font-size:.92rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+  .nav-links a:hover{color:var(--clay)}
+  .nav-links a.active{color:var(--clay);font-weight:600;border-bottom:2px solid var(--gold);padding-bottom:2px}
+  .nav-cta{font-size:.88rem;font-weight:600;color:#fff !important;background:var(--clay);text-decoration:none;padding:9px 20px;border-radius:30px;transition:background .2s,transform .2s;white-space:nowrap;border-bottom:none !important}
+  .nav-cta:hover{background:var(--clay-deep) !important;transform:translateY(-1px)}
+
+  /* hero */
+  .hero{padding:60px 0 70px}
+  .hero-eyebrow{font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:24px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.6rem,6.5vw,4.6rem);line-height:1.05;letter-spacing:-.5px;max-width:16ch}
+  .hero h1 em{font-style:italic;color:var(--clay)}
+  .hero p.lede{font-size:clamp(1.1rem,2vw,1.32rem);color:var(--ink-soft);max-width:52ch;margin-top:30px}
+  .btn{display:inline-block;background:var(--clay);color:#fff;text-decoration:none;font-weight:600;font-size:1rem;padding:16px 34px;border-radius:40px;margin-top:38px;transition:transform .25s,background .25s,box-shadow .25s;box-shadow:0 10px 30px -12px rgba(156,74,42,.6)}
+  .btn:hover{background:var(--clay-deep);transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(156,74,42,.7)}
+
+  /* divider */
+  .divider{display:flex;align-items:center;gap:16px;margin:0 auto;color:var(--line)}
+  .divider::before,.divider::after{content:"";height:1px;background:var(--line);flex:1}
+  .divider span{font-family:'Fraunces',serif;color:var(--clay);font-size:1.2rem}
+
+  /* offer */
+  .offer{background:linear-gradient(135deg,#ece0c8,#ddc9a6);color:var(--ink);border-radius:24px;padding:50px 44px;margin:20px 0 90px;position:relative;overflow:hidden;border:1px solid #d6c19c}
+  .offer::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(192,101,63,.16),transparent 70%)}
+  .offer .tag{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep);font-weight:600}
+  .offer h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,4vw,2.6rem);margin:14px 0 16px;line-height:1.15;max-width:20ch}
+  .offer p{max-width:56ch;color:var(--ink-soft);font-size:1.05rem}
+  .spots{display:flex;gap:10px;margin-top:30px}
+  .spot{width:34px;height:34px;border-radius:50%;border:2px solid var(--clay);display:grid;place-items:center;font-family:'Fraunces',serif;font-size:.95rem;color:var(--clay)}
+
+  /* story */
+  section.story{padding:30px 0 50px}
+  .kicker{font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);font-weight:600;margin-bottom:18px}
+  .story h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,4.5vw,3rem);line-height:1.1;margin-bottom:30px;max-width:18ch}
+  .story-body{max-width:62ch;font-size:1.12rem;color:var(--ink-soft)}
+  .story-body p{margin-bottom:22px}
+  .story-body strong{color:var(--ink);font-weight:600}
+  .pull{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--clay);line-height:1.3;border-left:3px solid var(--gold);padding-left:24px;margin:40px 0;max-width:24ch}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:70px 0 90px}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:32px 26px}
+  .pillar .num{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--clay);font-style:italic}
+  .pillar h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.25rem;margin:10px 0 12px}
+  .pillar p{color:var(--ink-soft);font-size:.98rem}
+
+  /* who */
+  .who{background:var(--paper);border-radius:24px;padding:54px 46px;margin-bottom:90px;border:1px solid var(--line)}
+  .who h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:26px}
+  .who ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:16px 36px}
+  .who li{position:relative;padding-left:30px;color:var(--ink-soft);font-size:1.04rem}
+  .who li::before{content:"❧";position:absolute;left:0;color:var(--clay);font-size:1.1rem}
+
+  /* final cta */
+  .final{text-align:center;padding:40px 0 30px}
+  .final h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;max-width:18ch;margin:0 auto 22px}
+  .final p{color:var(--ink-soft);max-width:48ch;margin:0 auto;font-size:1.1rem}
+
+  footer{border-top:1px solid var(--line);margin-top:90px;padding:46px 0 60px;font-size:.92rem;color:var(--ink-soft)}
+  footer .safe{background:#f0e7d8;border-radius:14px;padding:22px 26px;margin-bottom:28px;font-size:.95rem;line-height:1.6}
+  footer .safe strong{color:var(--ink)}
+  footer .cols{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+  footer a{color:var(--clay-deep)}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:760px){
+    .pillars{grid-template-columns:1fr}
+    .who ul{grid-template-columns:1fr}
+    .offer,.who{padding:38px 26px}
+    .nav-links a:not(.nav-cta){display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- VINES -->
+<svg class="florals" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <path id="leaf" d="M0 0 C10 -14 10 -36 0 -50 C-10 -36 -10 -14 0 0 Z"/>
+    <g id="tendril"><path d="M0 0 c 11 -2 17 7 8 14 c -6 4 -13 1 -11 -6 c 1 -4 7 -4 8 -1" fill="none" stroke="#6b7256" stroke-width="1.3" stroke-linecap="round" opacity=".45"/></g>
+    <g id="vine">
+      <path d="M0 0 C60 -34 130 34 190 0 C250 -34 320 34 380 0 C440 -34 510 34 560 0" fill="none" stroke="#6b7256" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>
+      <g fill="#36452a" opacity=".9">
+        <g transform="translate(40,-18) rotate(-55)"><use href="#leaf"/></g>
+        <g transform="translate(95,-30) rotate(-10)"><use href="#leaf"/></g>
+        <g transform="translate(150,-16) rotate(40)"><use href="#leaf"/></g>
+        <g transform="translate(210,10) rotate(135)"><use href="#leaf"/></g>
+        <g transform="translate(265,28) rotate(172)"><use href="#leaf"/></g>
+        <g transform="translate(320,12) rotate(150)"><use href="#leaf"/></g>
+        <g transform="translate(380,-4) rotate(-40)"><use href="#leaf"/></g>
+        <g transform="translate(435,-26) rotate(-12)"><use href="#leaf"/></g>
+        <g transform="translate(490,-14) rotate(38)"><use href="#leaf"/></g>
+        <g transform="translate(545,4) rotate(125)"><use href="#leaf"/></g>
+      </g>
+      <use href="#tendril" transform="translate(2,-2) rotate(-30)"/>
+      <use href="#tendril" transform="translate(560,2) rotate(150)"/>
+    </g>
+  </defs>
+  <use href="#vine" transform="translate(-50,95) scale(1.18)"/>
+  <use href="#vine" transform="translate(630,68) rotate(4) scale(1.12)"/>
+  <use href="#vine" transform="translate(72,880) rotate(-96) scale(1.06)"/>
+  <use href="#vine" transform="translate(1372,46) rotate(94) scale(1.06)"/>
+  <use href="#vine" transform="translate(-40,842) rotate(-3) scale(1.2)"/>
+  <use href="#vine" transform="translate(660,872) scale(1.12)"/>
+</svg>
+
+<!-- NAVBAR — Home page: no back arrow -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="logo">Re<span>·</span>building</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="what-a-session-looks-like.html">A Session</a>
+      <a href="about-rebekah.html">About</a>
+      <a href="https://calendly.com/fourboysforever/free-first-session" class="nav-cta">Book free session</a>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-eyebrow reveal">Coaching for survivors</div>
+    <h1 class="reveal">You survived. Now let's <em>rebuild</em> the life that's yours.</h1>
+    <p class="lede reveal">I'm <strong>Rebekah Robinson</strong>, a coach for people rebuilding after abuse — reclaiming their safety, their sense of who they are, and the everyday strength to keep moving forward. I've walked this road myself.</p>
+    <a href="#claim" class="btn reveal">Start with a free session →</a>
+  </header>
+
+  <div class="divider reveal"><span>❧</span></div>
+
+  <div class="offer reveal" id="claim">
+    <div class="tag">Limited — opening my practice</div>
+    <h2>My first 5 clients get their first session completely free.</h2>
+    <p>No cost, no pressure — just a real conversation about where you are and where you want to go. If it's a fit, we keep going. If not, the session is yours to keep.</p>
+    <div class="spots" aria-label="Five free spots available">
+      <div class="spot">1</div><div class="spot">2</div><div class="spot">3</div><div class="spot">4</div><div class="spot">5</div>
+    </div>
+    <a href="https://calendly.com/fourboysforever/free-first-session" class="btn" style="margin-top:30px">Book your free session</a>
+  </div>
+
+  <section class="story">
+    <div class="kicker reveal">My story</div>
+    <h2 class="reveal">Why I do this work</h2>
+    <div class="story-body">
+      <p class="reveal">I know what it is to start over from the ground up. <strong>I'm a survivor of abuse</strong> — and rebuilding after that isn't a single moment. It's learning to feel safe again, to trust your own read on the world, to believe the future can hold something good.</p>
+      <p class="reveal"><strong>I was also adopted</strong>, which means I've spent a lot of my life sitting with the questions underneath so much of this work: <em>Who am I, really? Where do I belong?</em> I understand how it feels to build a sense of self when the foundation you were handed has cracks in it.</p>
+      <p class="pull reveal">I rebuilt my life while raising four children. You don't have to wait until you're "healed" to start living.</p>
+      <p class="reveal">And I did all of it while <strong>raising four kids</strong> — carrying real weight while doing my own healing, determined not to pass the pain down. So when I say I understand showing up for everyone else while you're still putting yourself back together, I mean it from experience.</p>
+    </div>
+  </section>
+
+  <div class="pillars">
+    <div class="pillar reveal">
+      <div class="num">01</div>
+      <h3>Safety &amp; self-trust</h3>
+      <p>We start where everything has to start — feeling safe again and learning to trust your own instincts.</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="num">02</div>
+      <h3>Identity &amp; belonging</h3>
+      <p>Separating who you are from what was done to you, and building a self on your own terms.</p>
+    </div>
+    <div class="pillar reveal">
+      <div class="num">03</div>
+      <h3>Strength &amp; forward motion</h3>
+      <p>Boundaries, real choices, and a life you actually want — built to survive the hard weeks.</p>
+    </div>
+  </div>
+
+  <div class="who reveal">
+    <h2>This is for you if…</h2>
+    <ul>
+      <li>You've survived abuse and you're ready to rebuild</li>
+      <li>You feel like you lost yourself somewhere along the way</li>
+      <li>You want to break the cycle, not pass it on</li>
+      <li>You're carrying a lot and still want to grow</li>
+      <li>You want someone who genuinely gets it</li>
+      <li>You're ready for forward motion, at your own pace</li>
+    </ul>
+  </div>
+
+  <section class="final">
+    <h2 class="reveal">One conversation can be the start.</h2>
+    <p class="reveal">Five free sessions, open now. Reach out and tell me a little about where you are — there's no wrong way to start.</p>
+    <a href="https://calendly.com/fourboysforever/free-first-session" class="btn reveal">Claim your free session →</a>
+  </section>
+
+  <footer>
+    <div class="safe">
+      <strong>A note on care:</strong> Coaching is forward-focused support — it walks alongside you toward the life you want. It is not therapy or medical treatment. If you are in immediate danger or crisis, please reach out to <strong>[your local emergency number]</strong>, a domestic-violence hotline, or a licensed mental-health professional. I'm always glad to help connect you with the right support.
+    </div>
+    <div class="cols">
+      <div>© <span id="yr"></span> Rebekah Robinson · Rebuilding Coaching</div>
+      <div><a href="https://calendly.com/fourboysforever/free-first-session">Book a free session</a></div>
+    </div>
+  </footer>
+
+</div>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  window.addEventListener('scroll', () =>
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), i * 55); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
